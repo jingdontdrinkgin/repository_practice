@@ -1,92 +1,146 @@
-# group2_ws
+# Workspace Group 2 🔹 Seamless Engineering 2023
+Project Workspace for the lecture "Seamless Engineering", winter term 2023/24.
 
+Feel free to alter this readme to help your team members to run your code.
 
+## Getting Started
+Please follow all steps in order.
 
-## Getting started
+### Add an SSH Key for Your Local Device.
+Before you can download and update this repository with the following commands, you need to create an ssh key.
+To allow git to access repositories from the remote, add the ssh key to your gitlab account. You can find a short guide [here](https://medium.com/devops-with-valentine/2021-how-to-your-ssh-key-for-gitlab-on-linux-1b94e2a3a49a).
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+### Clone the Repo
+To use your repository, clone it to your local device
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
+```bash
+cd ~
 ```
-cd existing_repo
-git remote add origin https://gitlab.kit.edu/kit/ifl/lehrveranstaltungen/seamless_engineering/seamless-engineering-winter-term-23-24/student_projects/group-02/group2_ws.git
-git branch -M main
-git push -uf origin main
+```bash
+git git@gitlab.kit.edu:kit/ifl/lehrveranstaltungen/seamless_engineering/seamless-engineering-winter-term-23-24/student_projects/group-02/group2_ws.git
+``` 
+Go to the root folder of your workspace (group2_ws).
+```bash
+cd ~/group2_ws
 ```
 
-## Integrate with your tools
+We provide you with additional packages in the `src/common` directory.
+These additional packages are linked as submodules to this workspace.
+In order to retrieve them, you have to run an additional command before you continue.
 
-- [ ] [Set up project integrations](https://gitlab.kit.edu/kit/ifl/lehrveranstaltungen/seamless_engineering/seamless-engineering-winter-term-23-24/student_projects/group-02/group2_ws/-/settings/integrations)
+```bash
+git submodule update --init --recursive --remote
+```
+This will clone all additional packages.
 
-## Collaborate with your team
+### Install ROS and other Dependencies
+⚠️ *Note: When using one of the Seamless OS sticks, this step has to be skipped.* ⚠️
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
 
-## Test and Deploy
+The `common` directory contains utility shell scripts. To use them, you have to make them executable:
+```bash
+cd ~/group2_ws/src/common/scripts
+```
+```bash
+chmod +x edit_bashrc.sh install_se_pkgs.sh
+```
 
-Use the built-in continuous integration in GitLab.
+You can install the necessary packages via the `install_se_pkgs.sh` script, or manually. These packages are already
+preinstalled on the provided OS sticks. To install via the script enter
+```bash
+cd ~/group2_ws/src/common/scripts
+```
+```bash
+sudo ./install_se_pkgs.sh
+```
+Manual install instructions are listed below.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### Configure ROS
+To check if all packages were downloaded correctly, try to build the whole workspace and observe if all 
+common packages are compiled:
+```bash
+cd ~/group2_ws/
+```
+```bash
+catkin_make
+```
 
-***
+Next , we'll tell ROS where to look for resources. 
 
-# Editing this README
+Then just run the script `edit_bashrc.sh`:
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+```bash
+cd ~/group2_ws/src/common/scripts
+```
+```bash
+chmod +x edit_bashrc.sh
+```
+```bash
+./edit_bashrc.sh
+```
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+And you are good to go!
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Simulation
+All models and provided nodes can be started using launch files. A good place to start is the full Seamless Engineering
+world with all models loaded. Just launch it via:
+```bash
+    roslaunch seamless_environment se_world.launch
+```
+This also includes visualization with Rviz.
+Feel free to copy this launch file and modify it according to your personal task,
+by commenting out unnecessary models.
+Turn off navigation in this launch file to get an exact position of the turtlebot.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+### Where do I put My Own Code?
+This repository is your catkin workspace. Therefore, all ROS packages you develop need to be placed in the `src` folder.
+There you can create your own packages. Just be careful not to alter code in the `common` folder, as this could create issues 
+when downloading new versions of the common packages.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+## Tutorials
+Example script: `src/common/robis_uarm/scripts/very_simple_action_client_example.py`
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+### Useful Links
+- [Git Submodules](https://www.vogella.com/tutorials/GitSubmodules/article.html)
+- ROS:
+  - [rqt](http://wiki.ros.org/rqt), [rqt plugins](http://wiki.ros.org/rqt/Plugins): Topic Monitor, Easy Message Publisher, TF-Tree, Node-Graph
+  - [RViz](http://wiki.ros.org/rviz)
+  - [ROS Tutorials](http://wiki.ros.org/ROS/Tutorials)
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+## Manual ROS Installation:
 
-## License
-For open source projects, say how it is licensed.
+### ROS
+Install ROS noetic desktop full!
+(Instructions can be found [here](http://wiki.ros.org/noetic/Installation/Ubuntu)).
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+don't forget:
+```bash
+echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+```
+and
+```bash
+source ~/.bashrc    
+```
+
+### Turtlebot3 Packages
+```bash
+sudo apt-get install ros-noetic-joy ros-noetic-teleop-twist-joy \
+ros-noetic-teleop-twist-keyboard ros-noetic-laser-proc \
+ros-noetic-rgbd-launch ros-noetic-depthimage-to-laserscan \
+ros-noetic-rosserial-arduino ros-noetic-rosserial-python \
+ros-noetic-rosserial-server ros-noetic-rosserial-client \
+ros-noetic-rosserial-msgs ros-noetic-amcl ros-noetic-map-server \
+ros-noetic-move-base ros-noetic-urdf ros-noetic-xacro \
+ros-noetic-compressed-image-transport ros-noetic-rqt* \
+ros-noetic-gmapping ros-noetic-navigation ros-noetic-interactive-markers \
+ros-noetic-dynamixel-sdk ros-noetic-turtlebot3-msgs ros-noetic-turtlebot3 \
+ros-noetic-effort-controllers
+```
+
+### Required Python Packages
+```bash
+pip install robust_serial squaternion shapely nptyping
+```
